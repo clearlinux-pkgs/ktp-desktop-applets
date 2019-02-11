@@ -5,22 +5,22 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : ktp-desktop-applets
-Version  : 18.08.0
-Release  : 1
-URL      : https://download.kde.org/stable/applications/18.08.0/src/ktp-desktop-applets-18.08.0.tar.xz
-Source0  : https://download.kde.org/stable/applications/18.08.0/src/ktp-desktop-applets-18.08.0.tar.xz
-Source99 : https://download.kde.org/stable/applications/18.08.0/src/ktp-desktop-applets-18.08.0.tar.xz.sig
+Version  : 18.12.2
+Release  : 2
+URL      : https://download.kde.org/stable/applications/18.12.2/src/ktp-desktop-applets-18.12.2.tar.xz
+Source0  : https://download.kde.org/stable/applications/18.12.2/src/ktp-desktop-applets-18.12.2.tar.xz
+Source99 : https://download.kde.org/stable/applications/18.12.2/src/ktp-desktop-applets-18.12.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.1
-Requires: ktp-desktop-applets-lib
-Requires: ktp-desktop-applets-license
-Requires: ktp-desktop-applets-data
-Requires: ktp-desktop-applets-locales
+Requires: ktp-desktop-applets-data = %{version}-%{release}
+Requires: ktp-desktop-applets-lib = %{version}-%{release}
+Requires: ktp-desktop-applets-license = %{version}-%{release}
+Requires: ktp-desktop-applets-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : plasma-framework-dev
-BuildRequires : qtbase-dev qtbase-extras mesa-dev
+BuildRequires : qtbase-dev mesa-dev
 
 %description
 No detailed description available
@@ -36,8 +36,8 @@ data components for the ktp-desktop-applets package.
 %package lib
 Summary: lib components for the ktp-desktop-applets package.
 Group: Libraries
-Requires: ktp-desktop-applets-data
-Requires: ktp-desktop-applets-license
+Requires: ktp-desktop-applets-data = %{version}-%{release}
+Requires: ktp-desktop-applets-license = %{version}-%{release}
 
 %description lib
 lib components for the ktp-desktop-applets package.
@@ -60,27 +60,27 @@ locales components for the ktp-desktop-applets package.
 
 
 %prep
-%setup -q -n ktp-desktop-applets-18.08.0
+%setup -q -n ktp-desktop-applets-18.12.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535234960
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1549875793
+mkdir -p clr-build
 pushd clr-build
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1535234960
+export SOURCE_DATE_EPOCH=1549875793
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/ktp-desktop-applets
-cp COPYING %{buildroot}/usr/share/doc/ktp-desktop-applets/COPYING
-cp COPYING.LIB %{buildroot}/usr/share/doc/ktp-desktop-applets/COPYING.LIB
-cp cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/doc/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
+mkdir -p %{buildroot}/usr/share/package-licenses/ktp-desktop-applets
+cp COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/COPYING
+cp COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/COPYING.LIB
+cp cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
 pushd clr-build
 %make_install
 popd
@@ -125,10 +125,10 @@ popd
 /usr/lib64/qt5/qml/org/kde/ktpcontactlist/qmldir
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/ktp-desktop-applets/COPYING
-/usr/share/doc/ktp-desktop-applets/COPYING.LIB
-/usr/share/doc/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/ktp-desktop-applets/COPYING
+/usr/share/package-licenses/ktp-desktop-applets/COPYING.LIB
+/usr/share/package-licenses/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
 
 %files locales -f plasma_applet_org.kde.ktp-chat.lang -f plasma_applet_org.kde.person.lang -f plasma_applet_org.kde.ktp-contactlist.lang
 %defattr(-,root,root,-)
