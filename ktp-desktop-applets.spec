@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : ktp-desktop-applets
-Version  : 19.08.2
-Release  : 13
-URL      : https://download.kde.org/stable/applications/19.08.2/src/ktp-desktop-applets-19.08.2.tar.xz
-Source0  : https://download.kde.org/stable/applications/19.08.2/src/ktp-desktop-applets-19.08.2.tar.xz
-Source1 : https://download.kde.org/stable/applications/19.08.2/src/ktp-desktop-applets-19.08.2.tar.xz.sig
+Version  : 19.08.3
+Release  : 14
+URL      : https://download.kde.org/stable/applications/19.08.3/src/ktp-desktop-applets-19.08.3.tar.xz
+Source0  : https://download.kde.org/stable/applications/19.08.3/src/ktp-desktop-applets-19.08.3.tar.xz
+Source1 : https://download.kde.org/stable/applications/19.08.3/src/ktp-desktop-applets-19.08.3.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.1
@@ -60,14 +60,14 @@ locales components for the ktp-desktop-applets package.
 
 
 %prep
-%setup -q -n ktp-desktop-applets-19.08.2
+%setup -q -n ktp-desktop-applets-19.08.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570771420
+export SOURCE_DATE_EPOCH=1573188143
 mkdir -p clr-build
 pushd clr-build
 # -Werror is for werrorists
@@ -84,12 +84,12 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1570771420
+export SOURCE_DATE_EPOCH=1573188143
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ktp-desktop-applets
-cp COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/COPYING
-cp COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/COPYING.LIB
-cp cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
+cp %{_builddir}/ktp-desktop-applets-19.08.3/COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/ktp-desktop-applets-19.08.3/COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/01a6b4bf79aca9b556822601186afab86e8c4fbf
+cp %{_builddir}/ktp-desktop-applets-19.08.3/cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/ff3ed70db4739b3c6747c7f624fe2bad70802987
 pushd clr-build
 %make_install
 popd
@@ -135,9 +135,9 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/ktp-desktop-applets/COPYING
-/usr/share/package-licenses/ktp-desktop-applets/COPYING.LIB
-/usr/share/package-licenses/ktp-desktop-applets/cmake_modules_COPYING-CMAKE-SCRIPTS
+/usr/share/package-licenses/ktp-desktop-applets/01a6b4bf79aca9b556822601186afab86e8c4fbf
+/usr/share/package-licenses/ktp-desktop-applets/4cc77b90af91e615a64ae04893fdffa7939db84c
+/usr/share/package-licenses/ktp-desktop-applets/ff3ed70db4739b3c6747c7f624fe2bad70802987
 
 %files locales -f plasma_applet_org.kde.ktp-chat.lang -f plasma_applet_org.kde.person.lang -f plasma_applet_org.kde.ktp-contactlist.lang
 %defattr(-,root,root,-)
