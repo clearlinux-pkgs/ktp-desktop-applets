@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : ktp-desktop-applets
-Version  : 19.12.0
-Release  : 15
-URL      : https://download.kde.org/stable/release-service/19.12.0/src/ktp-desktop-applets-19.12.0.tar.xz
-Source0  : https://download.kde.org/stable/release-service/19.12.0/src/ktp-desktop-applets-19.12.0.tar.xz
-Source1  : https://download.kde.org/stable/release-service/19.12.0/src/ktp-desktop-applets-19.12.0.tar.xz.sig
+Version  : 19.12.1
+Release  : 16
+URL      : https://download.kde.org/stable/release-service/19.12.1/src/ktp-desktop-applets-19.12.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/19.12.1/src/ktp-desktop-applets-19.12.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/19.12.1/src/ktp-desktop-applets-19.12.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.1
@@ -60,15 +60,15 @@ locales components for the ktp-desktop-applets package.
 
 
 %prep
-%setup -q -n ktp-desktop-applets-19.12.0
-cd %{_builddir}/ktp-desktop-applets-19.12.0
+%setup -q -n ktp-desktop-applets-19.12.1
+cd %{_builddir}/ktp-desktop-applets-19.12.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1576566490
+export SOURCE_DATE_EPOCH=1578682163
 mkdir -p clr-build
 pushd clr-build
 # -Werror is for werrorists
@@ -85,12 +85,12 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1576566490
+export SOURCE_DATE_EPOCH=1578682163
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ktp-desktop-applets
-cp %{_builddir}/ktp-desktop-applets-19.12.0/COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/ktp-desktop-applets-19.12.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/01a6b4bf79aca9b556822601186afab86e8c4fbf
-cp %{_builddir}/ktp-desktop-applets-19.12.0/cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/ff3ed70db4739b3c6747c7f624fe2bad70802987
+cp %{_builddir}/ktp-desktop-applets-19.12.1/COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/ktp-desktop-applets-19.12.1/COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/01a6b4bf79aca9b556822601186afab86e8c4fbf
+cp %{_builddir}/ktp-desktop-applets-19.12.1/cmake/modules/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/ff3ed70db4739b3c6747c7f624fe2bad70802987
 pushd clr-build
 %make_install
 popd
