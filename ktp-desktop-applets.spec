@@ -6,11 +6,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : ktp-desktop-applets
-Version  : 23.04.0
-Release  : 51
-URL      : https://download.kde.org/stable/release-service/23.04.0/src/ktp-desktop-applets-23.04.0.tar.xz
-Source0  : https://download.kde.org/stable/release-service/23.04.0/src/ktp-desktop-applets-23.04.0.tar.xz
-Source1  : https://download.kde.org/stable/release-service/23.04.0/src/ktp-desktop-applets-23.04.0.tar.xz.sig
+Version  : 23.04.1
+Release  : 52
+URL      : https://download.kde.org/stable/release-service/23.04.1/src/ktp-desktop-applets-23.04.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/23.04.1/src/ktp-desktop-applets-23.04.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/23.04.1/src/ktp-desktop-applets-23.04.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -21,6 +21,7 @@ Requires: ktp-desktop-applets-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : extra-cmake-modules-data
+BuildRequires : plasma-framework-dev
 BuildRequires : qtbase-dev mesa-dev
 # Suppress stripping binaries
 %define __strip /bin/true
@@ -64,41 +65,62 @@ locales components for the ktp-desktop-applets package.
 
 
 %prep
-%setup -q -n ktp-desktop-applets-23.04.0
-cd %{_builddir}/ktp-desktop-applets-23.04.0
+%setup -q -n ktp-desktop-applets-23.04.1
+cd %{_builddir}/ktp-desktop-applets-23.04.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682016010
+export SOURCE_DATE_EPOCH=1684779530
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1682016010
+export SOURCE_DATE_EPOCH=1684779530
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ktp-desktop-applets
 cp %{_builddir}/ktp-desktop-applets-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/4cc77b90af91e615a64ae04893fdffa7939db84c || :
 cp %{_builddir}/ktp-desktop-applets-%{version}/COPYING.LIB %{buildroot}/usr/share/package-licenses/ktp-desktop-applets/01a6b4bf79aca9b556822601186afab86e8c4fbf || :
+pushd clr-build-avx2
+%make_install_v3  || :
+popd
 pushd clr-build
 %make_install
 popd
 %find_lang plasma_applet_org.kde.ktp-chat
 %find_lang plasma_applet_org.kde.person
 %find_lang plasma_applet_org.kde.ktp-contactlist
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -131,6 +153,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/qt5/qml/org/kde/ktpchat/libktpchatplugin.so
+/V3/usr/lib64/qt5/qml/org/kde/ktpcontactlist/libktpcontactlistplugin.so
 /usr/lib64/qt5/qml/org/kde/ktpchat/libktpchatplugin.so
 /usr/lib64/qt5/qml/org/kde/ktpchat/qmldir
 /usr/lib64/qt5/qml/org/kde/ktpcontactlist/libktpcontactlistplugin.so
